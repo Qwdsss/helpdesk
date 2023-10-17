@@ -1,0 +1,56 @@
+{% block content %}
+  <h2>Детали проблемы</h2>
+
+  <form method="post">
+    {% csrf_token %}
+    
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>Имя пользователя:</th>
+          <td>{{ problem.user }}</td>
+        </tr>
+        <tr>
+          <th>Телефон:</th>
+          <td>{{ problem.phone }}</td>
+        </tr>
+        <tr>
+          <th>Емэйл:</th>
+          <td>{{ problem.email }}</td>
+        </tr>
+        <tr>
+          <th>Описание проблемы:</th>
+          <td>{{ problem.description }}</td>
+        </tr>
+        <tr>
+          <th>Приоритет:</th>
+          <td>{{ problem.get_priority_display }}</td>
+        </tr>
+        <tr>
+          <th>Дата создания:</th>
+          <td>{{ problem.created_at }}</td>
+        </tr>
+        <tr>
+          <th>Действия:</th>
+          <td>
+            <textarea name="actions" rows="4" cols="50">{{ problem.actions }}</textarea>
+          </td>
+        </tr>
+        <tr>
+          <th>Статус:</th>
+          <td>
+            <select name="status">
+              <option value="new" {% if problem.status == 'new' %}selected{% endif %}>Новый</option>
+              <option value="in_progress" {% if problem.status == 'in_progress' %}selected{% endif %}>В процессе</option>
+              <option value="resolved" {% if problem.status == 'resolved' %}selected{% endif %}>Решено</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <button type="submit">Сохранить</button>
+  </form>
+
+  <a href="{% url 'problem_list' %}" class="btn btn-primary">Вернуться к списку проблем</a>
+{% endblock %}
